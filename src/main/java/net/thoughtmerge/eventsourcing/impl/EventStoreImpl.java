@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.eventsourcing.inmemory;
+package net.thoughtmerge.eventsourcing.impl;
 
 import java.util.Collection;
 import net.thoughtmerge.domain.Identifier;
@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author evan.gates
  */
-public class InMemoryEventStore implements EventStore {
-  private final static Logger logger = LoggerFactory.getLogger(InMemoryEventStore.class);
+public class EventStoreImpl implements EventStore {
+  private final static Logger logger = LoggerFactory.getLogger(EventStoreImpl.class);
   
   private final AppendOnlyStore appendOnlyStore;
   private final EventSerializer eventSerializer;
 
-  public InMemoryEventStore(AppendOnlyStore appendOnlyStore, EventSerializer eventSerializer) {
+  public EventStoreImpl(AppendOnlyStore appendOnlyStore, EventSerializer eventSerializer) {
     this.appendOnlyStore = appendOnlyStore;
     this.eventSerializer = eventSerializer;
   }

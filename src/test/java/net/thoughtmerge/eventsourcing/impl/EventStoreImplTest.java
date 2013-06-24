@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.eventsourcing.inmemory;
+package net.thoughtmerge.eventsourcing.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,25 +30,25 @@ import static org.fest.assertions.Assertions.assertThat;
  *
  * @author evan.gates
  */
-public class InMemoryEventStoreTest {
+public class EventStoreImplTest {
   @Rule
   public ExpectedException expectedException = ExpectedException.none();
   
-  private IMocksControl mocksControl;
+  private IMocksControl mocks;
   
   private AppendOnlyStore appendOnlyStore;
   private EventSerializer eventSerializer;
 
-  private InMemoryEventStore eventStore;
+  private EventStoreImpl eventStore;
 
   @Before
   public void setUp() {
-    mocksControl = createStrictControl();
+    mocks = createStrictControl();
     
-    appendOnlyStore = mocksControl.createMock(AppendOnlyStore.class);
-    eventSerializer = mocksControl.createMock(EventSerializer.class);
+    appendOnlyStore = mocks.createMock(AppendOnlyStore.class);
+    eventSerializer = mocks.createMock(EventSerializer.class);
     
-    eventStore = new InMemoryEventStore(appendOnlyStore, eventSerializer);
+    eventStore = new EventStoreImpl(appendOnlyStore, eventSerializer);
     
     assertThat(eventStore).isNotNull();
   }
@@ -67,13 +67,29 @@ public class InMemoryEventStoreTest {
     appendOnlyStore.append(identifier.getValue().toString(), data, expectedVersion);
     expectLastCall();
     
-    mocksControl.replay();
+    mocks.replay();
     
     // act
     eventStore.appendToStream(identifier, expectedVersion, events);
     
     // assert
-    mocksControl.verify();
+    mocks.verify();
+  }
+  
+  @Test
+  public void appendToStream_withEmptyEventList_shouldNotCallAppend() throws Exception {
+    // arrange
+    final ArrayList<Event> emptyEventsList = new ArrayList<>();
+    final Identifier<Integer> identifier = new IntegerIdentifier(1);
+    final int expectedVersion = 0;
+    
+    mocks.replay();
+
+    // act
+    eventStore.appendToStream(identifier, expectedVersion, emptyEventsList);
+
+    // assert
+    mocks.verify();
   }
   
   @Test
@@ -97,13 +113,13 @@ public class InMemoryEventStoreTest {
     expect(eventSerializer.deserializeEvents(data))
         .andReturn(events);
     
-    mocksControl.replay();
+    mocks.replay();
     
     // act
     eventStore.appendToStream(identifier, expectedVersion, events);
     
     // assert
-    mocksControl.verify();
+    mocks.verify();
   }
   
   private static class TestEvent implements Event {

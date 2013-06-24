@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.eventsourcing.inmemory;
+package net.thoughtmerge.eventsourcing.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
