@@ -10,7 +10,7 @@ package net.thoughtmerge.subscriptions;
 import java.util.Arrays;
 import net.thoughtmerge.eventsourcing.Event;
 import net.thoughtmerge.eventsourcing.EventSourcedAggregate;
-import net.thoughtmerge.subscriptions.commands.ChangeName;
+import net.thoughtmerge.subscriptions.commands.ChangeNameCommand;
 import net.thoughtmerge.subscriptions.events.NameChanged;
 
 /**
@@ -29,7 +29,7 @@ public class Subscription extends EventSourcedAggregate {
     return name;
   }
   
-  Iterable<? extends Event> handle(ChangeName command) {
+  Iterable<? extends Event> handle(ChangeNameCommand command) {
     this.name = command.name;
     
     return Arrays.asList(new NameChanged(command.name));

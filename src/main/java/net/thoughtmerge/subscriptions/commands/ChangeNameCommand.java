@@ -13,10 +13,10 @@ import net.thoughtmerge.eventsourcing.Command;
  *
  * @author evan.gates
  */
-public class ChangeName implements Command {
+public class ChangeNameCommand implements Command {
   public final String name;
 
-  public ChangeName(String name) {
+  public ChangeNameCommand(String name) {
     this.name = name;
   }
 }
