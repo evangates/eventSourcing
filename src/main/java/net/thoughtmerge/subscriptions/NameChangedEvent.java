@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.subscriptions.events;
+package net.thoughtmerge.subscriptions;
 
 import net.thoughtmerge.eventsourcing.Event;
 import org.apache.commons.lang.builder.EqualsBuilder;

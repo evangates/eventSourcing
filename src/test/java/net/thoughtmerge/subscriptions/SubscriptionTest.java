@@ -11,8 +11,6 @@ package net.thoughtmerge.subscriptions;
 import java.util.Arrays;
 import java.util.List;
 import net.thoughtmerge.eventsourcing.Event;
-import net.thoughtmerge.subscriptions.commands.ChangeNameCommand;
-import net.thoughtmerge.subscriptions.events.NameChangedEvent;
 import org.easymock.IMocksControl;
 import org.junit.Before;
 import org.junit.Rule;

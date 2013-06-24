@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.subscriptions.commands;
+package net.thoughtmerge.subscriptions;
 
 import net.thoughtmerge.eventsourcing.Command;
 

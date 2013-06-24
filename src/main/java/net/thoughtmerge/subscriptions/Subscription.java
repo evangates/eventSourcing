@@ -10,8 +10,6 @@ package net.thoughtmerge.subscriptions;
 import java.util.Arrays;
 import net.thoughtmerge.eventsourcing.Event;
 import net.thoughtmerge.eventsourcing.EventSourcedAggregate;
-import net.thoughtmerge.subscriptions.commands.ChangeNameCommand;
-import net.thoughtmerge.subscriptions.events.NameChangedEvent;
 
 /**
  *
