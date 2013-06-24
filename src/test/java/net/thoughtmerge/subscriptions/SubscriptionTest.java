@@ -9,7 +9,8 @@
 package net.thoughtmerge.subscriptions;
 
 import java.util.Arrays;
-import net.thoughtmerge.subscriptions.events.NameChanged;
+import net.thoughtmerge.subscriptions.commands.ChangeNameCommand;
+import net.thoughtmerge.subscriptions.events.NameChangedEvent;
 import org.easymock.IMocksControl;
 import org.junit.Before;
 import org.junit.Rule;
@@ -39,7 +40,7 @@ public class SubscriptionTest {
   @Test
   public void constructor_withEvents_shouldDispatchTheEvents() throws Exception {
     // arrange
-    final NameChanged nameChangedEvent = new NameChanged("foobar");
+    final NameChangedEvent nameChangedEvent = new NameChangedEvent("foobar");
     
     mocksControl.replay();
     

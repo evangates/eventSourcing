@@ -11,7 +11,7 @@ import java.util.Arrays;
 import net.thoughtmerge.eventsourcing.Event;
 import net.thoughtmerge.eventsourcing.EventSourcedAggregate;
 import net.thoughtmerge.subscriptions.commands.ChangeNameCommand;
-import net.thoughtmerge.subscriptions.events.NameChanged;
+import net.thoughtmerge.subscriptions.events.NameChangedEvent;
 
 /**
  *
@@ -32,10 +32,10 @@ public class Subscription extends EventSourcedAggregate {
   Iterable<? extends Event> handle(ChangeNameCommand command) {
     this.name = command.name;
     
-    return Arrays.asList(new NameChanged(command.name));
+    return Arrays.asList(new NameChangedEvent(command.name));
   }
   
-  void when(NameChanged event) {
+  void when(NameChangedEvent event) {
     this.name = event.name;
   }
 }

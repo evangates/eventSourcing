@@ -13,10 +13,10 @@ import net.thoughtmerge.eventsourcing.Event;
  *
  * @author evan.gates
  */
-public class NameChanged implements Event {
+public class NameChangedEvent implements Event {
   public final String name;
 
-  public NameChanged(String name) {
+  public NameChangedEvent(String name) {
     this.name = name;
   }
 }
