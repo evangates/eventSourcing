@@ -25,26 +25,11 @@ public class NameChangedEvent implements Event {
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(3, 89)
-        .append(name)
-        .toHashCode();
+    return HashCodeBuilder.reflectionHashCode(this);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    if (obj == this) {
-      return true;
-    }
-    if (obj.getClass() != getClass()) {
-      return false;
-    }
-
-    final NameChangedEvent other = (NameChangedEvent) obj;
-    return new EqualsBuilder()
-        .append(name, other.name)
-        .isEquals();
+    return EqualsBuilder.reflectionEquals(this, obj);
   }
 }
