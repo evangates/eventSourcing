@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.subscriptions;
+package net.thoughtmerge.eventsourcing.impl;
 
 import net.thoughtmerge.eventsourcing.EventDispatcher;
 import java.lang.reflect.InvocationTargetException;

@@ -10,7 +10,7 @@ package net.thoughtmerge.eventsourcing;
 import java.util.ArrayList;
 import java.util.List;
 import net.thoughtmerge.domain.Aggregate;
-import net.thoughtmerge.subscriptions.CachingReflectionEventDispatcher;
+import net.thoughtmerge.eventsourcing.impl.CachingReflectionEventDispatcher;
 
 /**
  *
