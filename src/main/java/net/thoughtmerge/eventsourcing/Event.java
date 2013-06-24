@@ -7,8 +7,10 @@
  */
 package net.thoughtmerge.eventsourcing;
 
+import java.io.Serializable;
+
 /**
  *
  * @author evan.gates
  */
-public interface Event {}
+public interface Event extends Serializable {}
