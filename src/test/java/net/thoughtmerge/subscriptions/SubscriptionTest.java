@@ -8,13 +8,8 @@
 
 package net.thoughtmerge.subscriptions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import net.thoughtmerge.eventsourcing.Event;
-import net.thoughtmerge.eventsourcing.EventDispatcher;
 import net.thoughtmerge.subscriptions.events.NameChanged;
-import org.easymock.Capture;
 import org.easymock.IMocksControl;
 import org.junit.Before;
 import org.junit.Rule;
