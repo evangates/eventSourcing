@@ -10,6 +10,7 @@ package net.thoughtmerge.eventsourcing;
 import java.util.ArrayList;
 import java.util.List;
 import net.thoughtmerge.domain.Aggregate;
+import net.thoughtmerge.eventsourcing.impl.CachingReflectionCommandDispatcher;
 import net.thoughtmerge.eventsourcing.impl.CachingReflectionEventDispatcher;
 
 /**
@@ -20,7 +21,8 @@ public abstract class EventSourcedAggregate extends Aggregate {
   
   private final List<Event> changes;
   
-  private final static EventDispatcher dispatcher = new CachingReflectionEventDispatcher();
+  private final static EventDispatcher EVENT_DISPATCHER = new CachingReflectionEventDispatcher();
+  private final static CommandDispatcher COMMAND_DISPATCHER = new CachingReflectionCommandDispatcher();
   
   protected EventSourcedAggregate() {
     this(null);
@@ -33,9 +35,13 @@ public abstract class EventSourcedAggregate extends Aggregate {
     this.handle(events);
   }
   
+  protected final Iterable<Event> handle(Command command) {
+    return COMMAND_DISPATCHER.dispatch(this, command);
+  }
+  
   protected final void handle(Iterable<? extends Event> events) {
     for (Event event : events) {
-      EventSourcedAggregate.dispatcher.dispatch(this, event);
+      EVENT_DISPATCHER.dispatch(this, event);
       this.changes.add(event);
     }
   }
