@@ -9,6 +9,8 @@
 package net.thoughtmerge.subscriptions;
 
 import java.util.Arrays;
+import java.util.List;
+import net.thoughtmerge.eventsourcing.Event;
 import net.thoughtmerge.subscriptions.commands.ChangeNameCommand;
 import net.thoughtmerge.subscriptions.events.NameChangedEvent;
 import org.easymock.IMocksControl;
@@ -35,6 +37,8 @@ public class SubscriptionTest {
   @Before
   public void setUp() {
     mocksControl = createStrictControl();
+    
+    subscription = new Subscription();
   }
   
   @Test
@@ -45,12 +49,25 @@ public class SubscriptionTest {
     mocksControl.replay();
     
     // act
-    subscription = new Subscription(Arrays.asList(nameChangedEvent));
+    Subscription result = new Subscription(Arrays.asList(nameChangedEvent));
 
     // assert
     mocksControl.verify();
     
-    assertThat(subscription.getName()).isEqualTo("foobar");
+    assertThat(result.getName()).isEqualTo("foobar");
   }
-
+  
+  @Test
+  public void handle_ChangeNameCommand_shouldReturnNameChangedEvent() throws Exception {
+    // arrange
+    final String NEW_NAME = "new name";
+    
+    final ChangeNameCommand changeNameCommand = new ChangeNameCommand(NEW_NAME);
+    final List<? extends Event> expectedEvents = Arrays.asList(new NameChangedEvent(NEW_NAME));
+    // act
+    Iterable<? extends Event> result = subscription.handle(changeNameCommand);
+    
+    // assert
+    assertThat(result).containsOnly(expectedEvents.toArray());
+  }
 }
