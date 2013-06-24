@@ -25,7 +25,7 @@ public abstract class EventSourcedAggregate extends Aggregate {
   private final static CommandDispatcher COMMAND_DISPATCHER = new CachingReflectionCommandDispatcher();
   
   protected EventSourcedAggregate() {
-    this(null);
+    this(new ArrayList<Event>());
   }
   
   protected EventSourcedAggregate(Iterable<? extends Event> events) {
