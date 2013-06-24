@@ -36,9 +36,7 @@ public class DefaultObjectSerializer implements EventSerializer {
       stream = new ByteArrayOutputStream();
       objectStream = new ObjectOutputStream(stream);
       
-      for (Event event : events) {
-        objectStream.writeObject(event);
-      }
+      objectStream.writeObject(events);
     
       byte[] retval = stream.toByteArray();
       
