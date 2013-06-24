@@ -21,6 +21,9 @@ public class Subscription extends EventSourcedAggregate {
   
   private String name;
   
+  public Subscription() {
+  }
+  
   public Subscription(Iterable<? extends Event> events) {
     super(events);
   }
@@ -29,13 +32,13 @@ public class Subscription extends EventSourcedAggregate {
     return name;
   }
   
-  Iterable<? extends Event> handle(ChangeNameCommand command) {
+  public Iterable<? extends Event> handle(ChangeNameCommand command) {
     this.name = command.name;
     
     return Arrays.asList(new NameChangedEvent(command.name));
   }
   
-  void when(NameChangedEvent event) {
+  public void when(NameChangedEvent event) {
     this.name = event.name;
   }
 }
