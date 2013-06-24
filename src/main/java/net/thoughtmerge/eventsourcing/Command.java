@@ -5,7 +5,7 @@
  *             THIS NOTICE DOES NOT IMPLY PUBLICATION
  * ------------------------------------------------------------------
  */
-package net.thoughtmerge.domain.services;
+package net.thoughtmerge.eventsourcing;
 
 /**
  *
