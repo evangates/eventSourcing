@@ -15,11 +15,11 @@ public abstract class Aggregate<IdentifierType> {
   
   private Identifier<IdentifierType> identifier;
   
-  public Identifier<IdentifierType> getIdentifier() {
+  public final Identifier<IdentifierType> getIdentifier() {
     return this.identifier;
   }
 
-  public void setIdentifier(Identifier<IdentifierType> identifier) {
+  public final void setIdentifier(Identifier<IdentifierType> identifier) {
     this.identifier = identifier;
   }
 }
