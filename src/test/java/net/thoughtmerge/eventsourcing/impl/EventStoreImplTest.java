@@ -117,9 +117,6 @@ public class EventStoreImplTest {
     
     // act
     eventStore.appendToStream(identifier, expectedVersion, events);
-    
-    // assert
-    mocks.verify();
   }
   
   private static class TestEvent implements Event {
