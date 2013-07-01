@@ -16,6 +16,7 @@ import net.thoughtmerge.eventsourcing.AppendOnlyStoreConcurrencyException;
 import net.thoughtmerge.eventsourcing.DataWithVersion;
 import net.thoughtmerge.eventsourcing.Event;
 import net.thoughtmerge.eventsourcing.EventSerializer;
+import net.thoughtmerge.eventsourcing.EventStream;
 import net.thoughtmerge.eventsourcing.OptimisticConcurrencyException;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -117,6 +118,85 @@ public class EventStoreImplTest {
     
     // act
     eventStore.appendToStream(identifier, expectedVersion, events);
+  }
+  
+  @Test
+  public void loadEventStream_EmptyListFromAppendOnlyStore_returnsEmptyEventStream() throws Exception {
+    // arrange
+    final Identifier<Integer> id = new IntegerIdentifier(3);
+    
+    expect(appendOnlyStore.readRecords(id.getValue().toString(), 0, Integer.MAX_VALUE))
+        .andReturn(new ArrayList());
+    
+    mocks.replay();
+    
+    // act
+    EventStream result = eventStore.loadEventStream(id);
+
+    // assert
+    mocks.verify();
+    
+    assertThat(result.getEvents()).hasSize(0);
+  }
+  
+  @Test
+  public void loadEventStream_withEntryFromAppendOnlyStore_returnsEventStreamWithEntryAndVersionSet() throws Exception {
+    // arrange
+    final Identifier<Integer> id = new IntegerIdentifier(3);
+    final int expectedVersion = 0;
+    final DataWithVersion entry = new DataWithVersion(expectedVersion, "simulated serialized data".getBytes());
+    final TestEvent event = new TestEvent("simulated event value");
+    final List<Event> expectedEvents = new ArrayList<>();
+    expectedEvents.add(event);
+    
+    expect(appendOnlyStore.readRecords(id.getValue().toString(), expectedVersion, Integer.MAX_VALUE))
+        .andReturn(Arrays.asList(entry));
+    expect(eventSerializer.deserializeEvents(entry.getData()))
+        .andReturn(expectedEvents);
+
+    mocks.replay();
+    
+    // act
+    EventStream result = eventStore.loadEventStream(id);
+
+    // assert
+    mocks.verify();
+    
+    assertThat(result.getVersion()).isEqualTo(expectedVersion);
+    assertThat(result.getEvents()).containsOnly(event);
+  }
+  
+  @Test
+  public void loadEventStream_withMultipleEntriesFromAppendOnlyStore_returnsEventStreamWithLatestVersionAndAllEvents() throws Exception {
+    // arrange
+    final Identifier<Integer> id = new IntegerIdentifier(3);
+    final int expectedVersion = 2;
+    final DataWithVersion eventSet0 = new DataWithVersion(expectedVersion, "1 event".getBytes());
+    final DataWithVersion eventSet1 = new DataWithVersion(expectedVersion, "2 more events".getBytes());
+    final TestEvent event0 = new TestEvent("event 0");
+    final TestEvent event1 = new TestEvent("event 1");
+    final TestEvent event2 = new TestEvent("event 2");
+    final List<Event> eventSet0Events = new ArrayList<>();
+    eventSet0Events.add(event0);
+    final List<Event> eventSet1Events = new ArrayList<>();
+    eventSet1Events.addAll(Arrays.asList(event1, event2));
+    
+    expect(appendOnlyStore.readRecords(id.getValue().toString(), 0, Integer.MAX_VALUE))
+        .andReturn(Arrays.asList(eventSet0, eventSet1));
+    expect(eventSerializer.deserializeEvents(eventSet0.getData()))
+        .andReturn(eventSet0Events);
+    expect(eventSerializer.deserializeEvents(eventSet1.getData()))
+        .andReturn(eventSet1Events);
+    
+    mocks.replay();
+
+    // act
+    EventStream result = eventStore.loadEventStream(id);
+
+    // assert
+    mocks.verify();
+    assertThat(result.getVersion()).isEqualTo(expectedVersion);
+    assertThat(result.getEvents()).containsOnly(event0, event1, event2);
   }
   
   private static class TestEvent implements Event {
