@@ -87,5 +87,22 @@
       <version>3.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>net.thoughtmerge.test</groupId>
+      <artifactId>junit</artifactId>
+      <version>0.1-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+  
+  <repositories>
+    <repository>
+      <id>thoughtmerge-mvn-repo</id>
+      <url>https://raw.github.com/evangates/thoughtmerge/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>

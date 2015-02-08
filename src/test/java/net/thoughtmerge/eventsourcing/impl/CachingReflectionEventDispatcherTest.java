@@ -9,12 +9,11 @@ package net.thoughtmerge.eventsourcing.impl;
 
 import net.thoughtmerge.domain.Aggregate;
 import net.thoughtmerge.eventsourcing.Event;
-import org.easymock.IMocksControl;
+import net.thoughtmerge.test.junit.TestNamePrinter;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.easymock.EasyMock.*;
 
 /**
  *
@@ -24,13 +23,14 @@ public class CachingReflectionEventDispatcherTest {
 
   @Rule
   public ExpectedException expectedException = ExpectedException.none();
-  private IMocksControl mocks;
+  
+  @Rule
+  public TestNamePrinter testNamePrinter = new TestNamePrinter();
+  
   private CachingReflectionEventDispatcher dispatcher;
 
   @Before
   public void setUp() {
-    mocks = createStrictControl();
-
     dispatcher = new CachingReflectionEventDispatcher();
   }
 
