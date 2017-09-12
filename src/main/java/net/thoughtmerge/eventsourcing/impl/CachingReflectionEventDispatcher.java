@@ -10,8 +10,8 @@ package net.thoughtmerge.eventsourcing.impl;
 import net.thoughtmerge.eventsourcing.EventDispatcher;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.thoughtmerge.domain.Aggregate;
 import net.thoughtmerge.eventsourcing.Event;
 import org.slf4j.Logger;
@@ -54,5 +54,5 @@ public class CachingReflectionEventDispatcher implements EventDispatcher {
     throw new UnsupportedOperationException("Could not find method to handle event: " + event.getClass().getName());
   }
   
-  private final static Map<Class, Method> methodCache = new HashMap<>();
+  private final Map<Class, Method> methodCache = new ConcurrentHashMap<>();
 }
