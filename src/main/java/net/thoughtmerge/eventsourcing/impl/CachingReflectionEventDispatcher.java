@@ -30,10 +30,8 @@ public class CachingReflectionEventDispatcher implements EventDispatcher {
     final Class eventType = event.getClass();
     
     try {
-      if (!methodCache.containsKey(eventType)) {
-        methodCache.put(eventType, findHandlerMethod(target, event));
-      }
-      
+      methodCache.putIfAbsent(eventType, findHandlerMethod(target, event));
+
       methodCache.get(eventType).invoke(target, event);
     }
     catch (UnsupportedOperationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
